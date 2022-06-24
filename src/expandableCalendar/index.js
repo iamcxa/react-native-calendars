@@ -620,7 +620,7 @@ class ExpandableCalendar extends Component {
             disableRightArrow={disableRightArrow}
             staticHeader
           />
-          {horizontal && this.renderWeekCalendar()}
+          {horizontal && !isOpen && this.renderWeekCalendar()}
           {!hideKnob && this.renderKnob()}
           {!horizontal && this.renderHeader()}
         </Animated.View>

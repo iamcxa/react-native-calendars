@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {ActivityIndicator} from 'react-native';
-import { TouchableOpacity as TouchableOpacityAndroid } from 'react-native-gesture-handler'
-import {View, Text,  Image, TouchableOpacity, Platform} from 'react-native';
+import {TouchableOpacity as TouchableOpacityAndroid} from 'react-native-gesture-handler';
+import {View, Text, Image, TouchableOpacity, Platform} from 'react-native';
 import XDate from 'xdate';
 import PropTypes from 'prop-types';
 import styleConstructor from './style';
@@ -42,12 +42,16 @@ const withPreventDoublePress = (WrappedComponent) => {
 
     render() {
       const disabled = this.state.onPressDisabled || this.props.disabled;
+
       return (
         <WrappedComponent
           {...this.props}
           disabled={disabled}
-          style={[this.props.style, disabled && {opacity: 0.2}]}
           onPress={this.onPress}
+          style={{
+            ...this.props.style,
+            opacity: disabled ? 0.2 : 1,
+          }}
         />
       );
     }
@@ -59,7 +63,7 @@ const withPreventDoublePress = (WrappedComponent) => {
   return PreventDoublePress;
 };
 
-const Button = withPreventDoublePress(Platform.OS==='ios' ? TouchableOpacity  :TouchableOpacityAndroid);
+const Button = withPreventDoublePress(TouchableOpacity);
 
 class CalendarHeader extends Component {
   static displayName = 'IGNORE';
@@ -158,10 +162,7 @@ class CalendarHeader extends Component {
       leftArrow = (
         <Button
           onPress={this.onPressLeft}
-          style={[
-            this.style.arrow,
-            this.props.disableLeftArrow && {opacity: 0.2},
-          ]}
+          style={this.style.arrow}
           hitSlop={{left: 20, right: 20, top: 20, bottom: 20}}
           testID={
             testID
@@ -182,10 +183,7 @@ class CalendarHeader extends Component {
       rightArrow = (
         <Button
           onPress={this.onPressRight}
-          style={[
-            this.style.arrow,
-            this.props.disableRightArrow && {opacity: 0.2},
-          ]}
+          style={this.style.arrow}
           hitSlop={{left: 20, right: 20, top: 20, bottom: 20}}
           testID={
             testID
